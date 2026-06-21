@@ -144,6 +144,15 @@ function fillQuestionBanks(){
   for(let n=0;tests.profile.questions.length<200;n++){if(n%2===0){let lang=langs[n%langs.length],item=structures[n%structures.length];tests.profile.questions.push([`Какое утверждение о структуре «${item}» верно при программировании на ${lang}?`,item==='стек'?['Элементы извлекаются последними добавленными','Элементы извлекаются первыми добавленными','Структура хранит только строки','Структура не содержит данных']:item==='очередь'?['Элементы извлекаются первыми добавленными','Элементы извлекаются последними добавленными','Она не поддерживает добавление','Она всегда отсортирована']:['Она хранит набор элементов','Она служит только для шифрования','Она удаляет программу','Она не имеет размера'],0])}else{let threat=threats[n%threats.length],goal=security[n%security.length];tests.profile.questions.push([`Какой термин ИБ связан с понятием «${threat}»?`,[threat,goal,'Компилятор','Сортировка'],0])}}
 }
 fillQuestionBanks();
+function extendQuestionBanks(){
+  let englishSubjects=['I','She','He','They','We','My friend','The student','Our teacher','The researchers','The team'];
+  let englishVerbs=['work','talk','walk','help','learn','play','visit','clean','cook','open'];
+  for(let n=0;tests.english.questions.length<500;n++){let s=englishSubjects[n%englishSubjects.length],v=englishVerbs[n%englishVerbs.length],correct=s==='I'||s==='They'||s==='We'?0:1;tests.english.questions.push([`Choose the correct form: ${s} ___ ${v} every day.`,[v,`${v}s`,`${v}ing`,`${v}ed`],correct])}
+  for(let n=0;tests.readiness.questions.length<500;n++){let start=n+11,stepSize=(n%9)+2,second=start+stepSize,third=second+stepSize;tests.readiness.questions.push([`Продолжите ряд: ${start}, ${second}, ${third}, …`,[String(third+stepSize),String(third+start),String(third+stepSize+1),String(third+2*stepSize)],0])}
+  let concepts=['стек','очередь','массив','цикл'],risks=['фишинг','DDoS-атака','троян','кейлоггер'];
+  for(let n=0;tests.profile.questions.length<500;n++){if(n%2===0){let c=concepts[n%concepts.length];tests.profile.questions.push([`Какое понятие программирования описывается как «${c}»?`,[c,'Шифрование','Вредоносное ПО','Сетевой протокол'],0])}else{let r=risks[n%risks.length];tests.profile.questions.push([`Какой термин информационной безопасности соответствует описанию «${r}»?`,[r,'Компиляция','Сортировка','Массив'],0])}}
+}
+extendQuestionBanks();
 function sectionName(){if(active.id==='english')return 'Лексико-грамматический тест';if(active.id==='readiness')return step<15?'Критическое мышление':'Аналитическое мышление';return step<20?'Алгоритмические языки программирования':'Основы информационной безопасности'}
 const modal=document.querySelector('#test-modal'), app=document.querySelector('#test-app');let active,step,answers;
 document.querySelectorAll('[data-test]').forEach(b=>b.addEventListener('click',()=>start(b.dataset.test,b.dataset.mode==='learn')));document.querySelector('.modal-close').onclick=close;modal.onclick=e=>{if(e.target===modal)close()};
